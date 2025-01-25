@@ -32,7 +32,7 @@ const AppToolbar = () => {
               Welcome, {user.username}
             </Typography>
             <Button component={NavLink} to="/create" color="inherit">
-              Create Post
+              Add new item
             </Button>
             <Button color="inherit" onClick={handleLogout}>Logout</Button>
           </>

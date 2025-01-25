@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid2';
-import { Avatar, Box, Button, Container, Link, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, TextField, Typography } from '@mui/material';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import {useAppDispatch} from "../../app/hooks.ts";
 import {login} from "./usersThunks.ts";
@@ -81,13 +81,6 @@ const Login = () => {
                     >
                         Sign In
                     </Button>
-                    <Grid container justifyContent="flex-end">
-                        <Grid>
-                            <Link href="#" variant="body2">
-                                Don't have an account yet? Sign up
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </Box>
             </Box>
         </Container>

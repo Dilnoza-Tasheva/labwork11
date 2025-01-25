@@ -2,6 +2,7 @@ export interface User {
   _id: string;
   username: string;
   token: string;
+  phone: number;
 }
 
 export interface ValidationError {
@@ -24,6 +25,8 @@ export interface RegisterResponse {
 export interface RegisterMutation {
   username: string;
   password: string;
+  displayName: string;
+  phone: string;
 }
 
 export interface LoginMutation {

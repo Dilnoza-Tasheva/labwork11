@@ -40,6 +40,21 @@ const UserSchema = new Schema<
     token: {
         type: String,
         required: true,
+    },
+    displayName: {
+      type: String,
+      required: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+        unique: true,
+        validate: {
+            validator: function (value: string) {
+                return /^\+?[1-9]\d{1,14}$/.test(value);
+            },
+            message: "Invalid phone number format",
+        },
     }
 });
 

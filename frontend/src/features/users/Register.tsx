@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid2';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -18,8 +17,10 @@ const Register = () => {
     const registerError = useAppSelector(selectRegisterError);
     const navigate = useNavigate();
     const [form, setForm] = useState<RegisterMutation>({
-        username: "",
-        password: "",
+      username: "",
+      password: "",
+      displayName:"",
+      phone: "",
     });
 
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +92,34 @@ const Register = () => {
                                 helperText={getFieldError('password')}
                             />
                         </Grid>
+                      <Grid size={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          name="display name"
+                          label="Display name"
+                          type="display name"
+                          id="displayName"
+                          value={form.displayName}
+                          onChange={inputChangeHandler}
+                          error={Boolean(getFieldError('displayName'))}
+                          helperText={getFieldError('displayName')}
+                        />
+                      </Grid>
+                      <Grid size={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          name="phone number"
+                          label="Phone number"
+                          type="tel"
+                          id="phone"
+                          value={form.phone}
+                          onChange={inputChangeHandler}
+                          error={Boolean(getFieldError('phone'))}
+                          helperText={getFieldError('phone')}
+                        />
+                      </Grid>
                     </Grid>
                     <Button
                         type="submit"
@@ -100,13 +129,6 @@ const Register = () => {
                     >
                         Sign Up
                     </Button>
-                    <Grid container justifyContent="flex-end">
-                        <Grid>
-                            <Link href="#" variant="body2">
-                                Already have an account? Sign in
-                            </Link>
-                        </Grid>
-                    </Grid>
                 </Box>
             </Box>
         </Container>
