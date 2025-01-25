@@ -5,6 +5,7 @@ import Register from "./features/users/Register.tsx";
 import Login from "./features/users/Login.tsx";
 import Items from './features/items/containers/Items.tsx';
 import NewItem from './features/items/containers/NewItem.tsx';
+import ItemDetails from './features/items/components/ItemDetails.tsx';
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/create" element={<NewItem />} />
+            <Route path="/items/:id" element={<ItemDetails />} />
           </Routes>
         </Container>
       </main>

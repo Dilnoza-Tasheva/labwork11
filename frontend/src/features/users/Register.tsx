@@ -30,7 +30,6 @@ const Register = () => {
 
     const submitHandler = async (e: React.FormEvent) => {
         e.preventDefault();
-
         try {
             await dispatch(register(form)).unwrap();
             navigate('/');
@@ -96,9 +95,9 @@ const Register = () => {
                         <TextField
                           required
                           fullWidth
-                          name="display name"
+                          name="displayName"
                           label="Display name"
-                          type="display name"
+                          type="text"
                           id="displayName"
                           value={form.displayName}
                           onChange={inputChangeHandler}
@@ -110,7 +109,7 @@ const Register = () => {
                         <TextField
                           required
                           fullWidth
-                          name="phone number"
+                          name="phone"
                           label="Phone number"
                           type="tel"
                           id="phone"

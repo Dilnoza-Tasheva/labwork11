@@ -21,6 +21,8 @@ export interface ValidationError {
 export interface RegisterResponse {
   user: User;
   message: string;
+  displayName: string;
+  phone: string;
 }
 
 export interface RegisterMutation {

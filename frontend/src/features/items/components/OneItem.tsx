@@ -37,7 +37,7 @@ const OneItem: React.FC<Props> = ({ title, price, id, image, category }) => {
           <p><strong>Price: </strong>{price} KGS</p>
         </CardContent>
         <CardActions>
-          <IconButton component={Link} to={"/items/" + id}>
+          <IconButton component={Link} to={`/items/${id}`}>
             <ArrowForward />
           </IconButton>
         </CardActions>
