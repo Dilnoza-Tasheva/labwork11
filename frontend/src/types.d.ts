@@ -2,6 +2,7 @@ export interface User {
   _id: string;
   username: string;
   token: string;
+  displayName: string;
   phone: number;
 }
 
@@ -36,4 +37,23 @@ export interface LoginMutation {
 
 export interface GlobalError {
   error: string;
+}
+
+export interface Item {
+  _id: string;
+  title: string;
+  description: string;
+  image: string | null;
+  price: number;
+  category: string;
+  seller: string;
+}
+
+export interface ItemMutation {
+  title: string;
+  description: string;
+  image: string | null;
+  price: number;
+  category: string;
+  seller: string;
 }

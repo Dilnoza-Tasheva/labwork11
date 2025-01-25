@@ -2,6 +2,7 @@ import express from 'express';
 import Item from '../models/Item';
 import auth, { RequestWithUser } from '../middleware/auth';
 import {imagesUpload} from "../multer";
+import {ItemWithoutId} from "../types";
 
 const itemRouter = express.Router();
 
@@ -19,27 +20,31 @@ itemRouter.get('/:id', async (req, res) => {
     res.send(item);
 });
 
+const CATEGORIES = ["Electronics", "Furniture", "Clothing"];
+
 itemRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
-        const user = (req as RequestWithUser).user;
-        try {
-            const { name, description, price } = req.body;
-            const image = req.file ? `/images/${req.file.filename}` : null;
-
-            const item = new Item({
-                name,
-                description,
-                price,
-                image,
-                user: user._id,
-            });
-
-            await item.save();
-            res.send(item);
-        } catch (error) {
-            next(error);
+    try {
+        if (req.body.category && !CATEGORIES.includes(req.body.category)) {
+             res.status(400).send({ error: "Invalid category" });
+             return;
         }
+        const newItemData: ItemWithoutId = {
+            title: req.body.title,
+            description: req.body.description,
+            price: req.body.price,
+            category: req.body.category,
+            image: req.file ? `/images/${req.file.filename}` : null,
+            seller: req.body.seller,
+        };
+
+        const item = new Item(newItemData);
+        await item.save();
+
+        res.send(item);
+    } catch (error) {
+        next(error);
     }
-);
+});
 
 itemRouter.delete('/:id', auth, async (req, res, next) => {
     const user = (req as RequestWithUser).user;

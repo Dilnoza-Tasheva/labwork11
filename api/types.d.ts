@@ -15,3 +15,5 @@ export interface Item {
     category: string;
     seller: string;
 }
+
+export type ItemWithoutId = Omit<Item, '_id'>
