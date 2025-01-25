@@ -12,7 +12,7 @@ export const register = createAsyncThunk<
     'users/register',
     async (registerMutation: RegisterMutation, {rejectWithValue}) => {
         try {
-            const response = await axiosApi.post<RegisterResponse>('/users/register', registerMutation);
+            const response = await axiosApi.post<RegisterResponse>('users/register', registerMutation);
             return response.data;
         } catch (error) {
             if (isAxiosError(error) && error.response && error.response.status === 400) {
@@ -28,7 +28,7 @@ export const login = createAsyncThunk<User, LoginMutation, {rejectValue: GlobalE
     'users/login',
     async (loginMutation, {rejectWithValue}) => {
         try {
-            const response = await axiosApi.post<RegisterResponse>('/users/sessions', loginMutation);
+            const response = await axiosApi.post<RegisterResponse>('users/sessions', loginMutation);
            return response.data.user;
         } catch (e) {
             if (isAxiosError(e) && e.response && e.response.status === 400) {

@@ -54,6 +54,7 @@ export const usersSlice = createSlice({
             .addCase(login.fulfilled, (state, {payload: user}) => {
                 state.loginLoading = false;
                 state.user = user;
+                console.log("Generated token: ", user.token);
             })
             .addCase(login.rejected, (state, {payload: error}) => {
                 state.loginLoading = false;

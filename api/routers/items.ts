@@ -6,8 +6,10 @@ import {ItemWithoutId} from "../types";
 
 const itemRouter = express.Router();
 
-itemRouter.get('/', async (req, res) => {
-    const items = await Item.find().populate('seller', 'displayName phone');
+itemRouter.get("/", async (req, res) => {
+    const { category } = req.query;
+    const filter = category ? { category: category.toString() } : {};
+    const items = await Item.find(filter).populate("seller", "displayName phone");
     res.send(items);
 });
 
@@ -64,5 +66,16 @@ itemRouter.delete('/:id', auth, async (req, res, next) => {
         next(error);
     }
 });
+
+itemRouter.get('/category/:category', async (req, res) => {
+    const { category } = req.params;
+    if (!CATEGORIES.includes(category)) {
+        res.status(400).send({ error: 'Invalid category' });
+        return;
+    }
+    const items = await Item.find({ category }).populate('seller', 'displayName phone');
+    res.send(items);
+});
+
 
 export default itemRouter;

@@ -12,22 +12,25 @@ const Login = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    const [state, setState] = useState<LoginMutation>({
+    const [form, setForm] = useState<LoginMutation>({
         username: '',
         password: '',
     });
 
     const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
-        setState(prevState => ({...prevState, [name]: value}));
+        setForm(prevState => ({...prevState, [name]: value}));
     };
 
     const submitFormHandler = async (event: React.FormEvent) => {
         event.preventDefault();
       try {
-        await dispatch(login(state)).unwrap();
+        await dispatch(login(form)).unwrap();
         navigate('/');
-      } catch (error) {
+      } catch (error: any) {
+        if (error.errors) {
+          console.error("Validation Errors: ", error.errors);
+        }
         console.log("Login error", error);
       }
     };
@@ -57,7 +60,7 @@ const Login = () => {
                               name="username"
                               fullWidth
                               autoComplete="current-username"
-                              value={state.username}
+                              value={form.username}
                               onChange={inputChangeHandler}
                             />
                         </Grid>
@@ -68,7 +71,7 @@ const Login = () => {
                               name="password"
                               type="password"
                               autoComplete="current-password"
-                              value={state.password}
+                              value={form.password}
                               onChange={inputChangeHandler}
                             />
                         </Grid>

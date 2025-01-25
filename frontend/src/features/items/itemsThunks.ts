@@ -2,10 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
 import { Item, ItemMutation } from "../../types";
 
-export const fetchItems = createAsyncThunk<Item[]>(
+export const fetchItems = createAsyncThunk<Item[], string | undefined>(
   "items/fetchItems",
-  async () => {
-    const response = await axiosApi.get<Item[]>("/items");
+  async (category) => {
+    const query = category ? `?category=${encodeURIComponent(category)}` : "";
+    const response = await axiosApi.get<Item[]>(`/items${query}`);
     return response.data;
   }
 );
