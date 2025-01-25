@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
 import { Item, ItemMutation } from "../../types";
+import { RootState } from '../../app/store.ts';
 
 export const fetchItems = createAsyncThunk<Item[], string | undefined>(
   "items/fetchItems",
@@ -21,11 +22,17 @@ export const fetchItemById = createAsyncThunk<Item, string>(
 
 export const createItem = createAsyncThunk<void, ItemMutation>(
   "items/createItem",
-  async (itemMutation) => {
+  async (itemMutation, { getState }) => {
+    const state = getState() as RootState;
+
+    const token = state.users.user?.token;
+
+    if (!token) {
+      throw new Error("No token available. Please log in to perform this action.");
+    }
+
     const formData = new FormData();
-
     const keys = Object.keys(itemMutation) as (keyof ItemMutation)[];
-
     keys.forEach((key) => {
       const value = itemMutation[key];
       if (value !== null) {
@@ -33,9 +40,14 @@ export const createItem = createAsyncThunk<void, ItemMutation>(
       }
     });
 
-    await axiosApi.post("/items", formData);
+    await axiosApi.post("/items", formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 );
+
 
 export const deleteItem = createAsyncThunk<string, string>(
   "items/deleteItem",

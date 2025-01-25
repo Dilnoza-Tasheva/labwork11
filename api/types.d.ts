@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export interface UserFields {
     username: string;
     password: string;
@@ -13,7 +15,7 @@ export interface Item {
     image: string | null;
     price: number;
     category: string;
-    seller: string;
+    seller: string | mongoose.Types.ObjectId;
 }
 
 export type ItemWithoutId = Omit<Item, '_id'>

@@ -25,6 +25,8 @@ itemRouter.get('/:id', async (req, res) => {
 const CATEGORIES = ["Electronics", "Furniture", "Clothing"];
 
 itemRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) => {
+    const user = (req as RequestWithUser).user;
+
     try {
         if (req.body.category && !CATEGORIES.includes(req.body.category)) {
              res.status(400).send({ error: "Invalid category" });
@@ -36,7 +38,7 @@ itemRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) 
             price: req.body.price,
             category: req.body.category,
             image: req.file ? `/images/${req.file.filename}` : null,
-            seller: req.body.seller,
+            seller: user._id,
         };
 
         const item = new Item(newItemData);
@@ -44,7 +46,8 @@ itemRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next) 
 
         res.send(item);
     } catch (error) {
-        next(error);
+        console.error("Error creating item:", error);
+        next(error)
     }
 });
 
